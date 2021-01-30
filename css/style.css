@@ -1,0 +1,80 @@
+#centralwidget {
+    background-color: rgba(31, 30, 30, 0.678);
+}
+    
+QPushButton {
+    background-color: orange;
+    color: rgb(0, 51, 204);
+    border: 2px outset red;
+    border-radius: 15px;
+    font-size: 17px;
+}
+
+QPushButton::hover {
+    background-color: rgb(255, 153, 102);
+}
+    
+QListWidget {
+    background-color: rgba(0, 51, 204, 150);
+    font-size: 20px;
+    border-radius: 15px;
+    color: orange;
+    border: 2px outset red;
+}
+    
+QListWidget::item::selected {
+    background-color: rgba(0, 51, 204, 0.842);
+    color: rgb(255, 51, 0);
+    border-radius: 15px;
+}
+    
+QLineEdit {
+    color: rgb(0, 51, 204);
+    background-color: orange;
+    border: 2px outset red;
+    border-radius: 15px;
+    font-size: 17px;
+}
+
+QScrollBar
+{
+    background-color: orange;
+    width: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 1px transparent #2A2929;
+}
+
+QScrollBar::handle
+{
+    background-color: red;
+    min-height: 5px;
+}
+
+QScrollBar::sub-line
+{
+    margin: 7px 0px 7px 0px;
+    border-image: url(:/qss_icons/rc/up_arrow_disabled.png);
+    height: 10px;
+    width: 10px;
+}
+
+QScrollBar::add-line
+{
+    margin: 7px 0px 7px 0px;
+    border-image: url(:/qss_icons/rc/down_arrow_disabled.png);
+    height: 10px;
+    width: 10px;
+}
+
+QScrollBar::up-arrow, QScrollBar::down-arrow
+{
+    background: none;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page
+{
+    background: none;
+}
