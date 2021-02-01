@@ -22,8 +22,9 @@ class Appearance(QtWidgets.QMainWindow):
         self.ui.line.installEventFilter(self)                   # event for pressed enter
 
         if not os.path.exists('data.dll'):
-            with open('data.dll', 'w', encoding='utf-8'):                   # create a file if it doesn't exist
-                ctypes.windll.kernel32.SetFileAttributesW('data.dll', 2)    # hide the file
+            with open('data.dll', 'w', encoding='utf-8'):           # create a file if it doesn't exist
+                pass
+        ctypes.windll.kernel32.SetFileAttributesW('data.dll', 2)    # hide the file
 
         self.refreshList()
 
