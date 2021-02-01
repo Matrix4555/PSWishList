@@ -63,17 +63,16 @@ class Appearance(QtWidgets.QMainWindow):
         delWord = self.ui.list.currentItem().text() + '\n'
         refreshedText = ''
         deletedAlready = False
-        with open('data.dll', 'r') as fileR:
+        with open('data.dll', 'r', encoding='utf-8') as fileR:
             for game in fileR:
                 if not deletedAlready and game.split(' + ')[1] == delWord:
                     deletedAlready = True
                     continue
                 refreshedText += game
         os.remove('data.dll')
-        with open('data.dll', 'w') as fileW:
+        with open('data.dll', 'w', encoding='utf-8') as fileW:
             fileW.write(refreshedText)
             ctypes.windll.kernel32.SetFileAttributesW('data.dll', 2)
-
         self.refreshList()
 
     def refreshList(self):
