@@ -4,7 +4,7 @@ from PyQt5.QtGui import QIcon, QDesktopServices
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWidgets import *
 import ctypes
-import os.path
+import os
 
 class Appearance(QtWidgets.QMainWindow):
     def __init__(self):
@@ -69,8 +69,11 @@ class Appearance(QtWidgets.QMainWindow):
                     deletedAlready = True
                     continue
                 refreshedText += game
+        os.remove('data.dll')
         with open('data.dll', 'w') as fileW:
             fileW.write(refreshedText)
+            ctypes.windll.kernel32.SetFileAttributesW('data.dll', 2)
+
         self.refreshList()
 
     def refreshList(self):
