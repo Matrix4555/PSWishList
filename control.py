@@ -1,8 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from window import Ui_MainWindow
 from PyQt5.QtGui import QIcon, QDesktopServices
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWidgets import *
+from window import Ui_MainWindow
 import ctypes
 import os
 
