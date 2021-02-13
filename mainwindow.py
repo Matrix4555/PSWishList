@@ -51,19 +51,19 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.refreshList()
 
-        if not os.path.exists('sound.mp3'):
+        if not os.path.exists('audio/sound.mp3'):
             here = os.path.dirname(__file__)
-            shutil.copy('sounddefault.mp3', here + '\\sound.mp3')
+            shutil.copy('audio\\sounddefault.mp3', here + '\\audio\\sound.mp3')
 
         pygame.mixer.init()
         self.sound = pygame.mixer.Channel(0)
         if not self.mute:
             def play():
-                pygame.mixer.music.load('soundstart.mp3')
+                pygame.mixer.music.load('audio\\soundstart.mp3')
                 pygame.mixer.music.play()
                 sleep(2)
                 if not self.mute:
-                    self.sound.play(pygame.mixer.Sound('sound.mp3'), -1)
+                    self.sound.play(pygame.mixer.Sound('audio\\sound.mp3'), -1)
             Thread(target = play).start()
 
     def refreshList(self):
@@ -254,7 +254,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if not self.mute:
             self.mute = True
             self.sound.stop()
-            pygame.mixer.music.load('soundend.mp3')
+            pygame.mixer.music.load('audio\\soundend.mp3')
             pygame.mixer.music.play()
             self.hide()
             sleep(2)
@@ -379,11 +379,11 @@ class MainWindow(QtWidgets.QMainWindow):
         here = os.path.dirname(__file__)
         shutil.copy(path, here)
         path = path.split('/')
-        if os.path.exists('sound.mp3'):
-            os.remove('sound.mp3')
-        os.rename(path[len(path) - 1], 'sound.mp3')
+        if os.path.exists('audio\\sound.mp3'):
+            os.remove('audio\\sound.mp3')
+        os.rename(path[len(path) - 1], 'audio\\sound.mp3')
 
-        self.sound.play(pygame.mixer.Sound('sound.mp3'), -1)
+        self.sound.play(pygame.mixer.Sound('audio\\sound.mp3'), -1)
         if self.mute:
             self.sound.stop()
 
@@ -402,7 +402,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.sound.stop()
             Thread(target = again).start()
         else:
-            Thread(target = lambda: self.sound.play(pygame.mixer.Sound('sound.mp3'), -1)).start()       # there is a thread because button should refresh quickly
+            Thread(target = lambda: self.sound.play(pygame.mixer.Sound('audio\\sound.mp3'), -1)).start()       # there is a thread because button should refresh quickly
 
 class Info(QtWidgets.QMessageBox):
     def __init__(self, icon = QtWidgets.QMessageBox.Information, title = 'Info'):
