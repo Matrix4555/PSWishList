@@ -1,43 +1,104 @@
 #centralwidget {
-    background-color: rgba(31, 30, 30, 0.678);
-}
-    
-QPushButton {
-    background-color: orange;
-    color: rgb(0, 51, 204);
-    border: 2px outset red;
-    border-radius: 15px;
-    font-size: 17px;
+    background-color: rgb(1, 25, 65);
 }
 
-QPushButton::hover {
-    background-color: rgb(255, 153, 102);
-}
-    
-QListWidget {
-    background-color: rgba(0, 51, 204, 150);
-    font-size: 20px;
-    border-radius: 15px;
-    color: orange;
-    border: 2px outset red;
-}
-    
-QListWidget::item::selected {
-    background-color: rgba(0, 51, 204, 0.842);
-    color: rgb(255, 51, 0);
-    border-radius: 15px;
-}
-    
 QLineEdit {
-    color: rgb(0, 51, 204);
-    background-color: orange;
-    border: 2px outset red;
-    border-radius: 15px;
+    color:white;
+    background-color: rgb(0, 32, 83);
     font-size: 17px;
+    border: 2px solid rgb(34, 104, 201);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-family: Calibri;
+    padding-left: 10px;
+    padding-right: 38px;
 }
 
-QScrollBar
-{
+QMenu {
+    background-color: rgb(0, 32, 83);
+    color: white;
+    border: 1px solid orange;
+    font-family: Segoe UI Semibold;
+}
+
+QMenu::item:selected {
+    background-color: rgb(5, 52, 128);
+}
+
+QListWidget {
+    background-color: rgb(0, 32, 83);
+    border: 2px solid rgb(34, 104, 201);
+    font-size: 20px;
+    color: white;
+}
+
+QListWidget::item::selected {
+    background-color: rgb(5, 52, 128);
+}
+
+#upperbutton {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#upperbutton::hover {
+    background-color: white;
+    border-radius: 19px;
+    padding-left: 2px;
+    padding-top: 1px;
+    padding-right: 1px;
+}
+
+#delbutton {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#delbutton::hover {
+    border-radius: 15px;
+    background-color: rgba(255, 0, 0, 0.384);
+}
+
+#titlelabel {
+    font-family: Segoe UI Semibold;
+    font-size: 17px;
+    color: white;
+}
+
+#datalabel {
+    font-family: Segoe UI Semibold;
+    color: white;
+    font-size: 12px;
+}
+
+#pricelabel {
+    font-family: Segoe UI Semibold;
+    color: white;
+    font-size: 21px;
+    qproperty-alignment: AlignRight;
+}
+
+#pspluspricelabel {
+    font-family: Segoe UI Semibold;
+    color: rgb(249, 203, 4);
+    font-size: 21px;
+    qproperty-alignment: AlignRight;
+}
+
+#strikethrougprice {
+    font-family: Segoe UI Semibold;
+    color: rgb(187, 187, 187);
+    font-size: 18px;
+    qproperty-alignment: AlignRight;
+    text-decoration: line-through;
+}
+
+#waitingwidget {
+    color: rgb(0, 153, 255);
+    font-size: 45px;
+    font-family: Calibri;
+}
+
+QScrollBar {
     background-color: orange;
     width: 15px;
     margin-top: 15px;
@@ -47,34 +108,29 @@ QScrollBar
     border: 1px transparent #2A2929;
 }
 
-QScrollBar::handle
-{
-    background-color: red;
+QScrollBar::handle {
+    background-color: white;
     min-height: 5px;
 }
 
-QScrollBar::sub-line
-{
+QScrollBar::sub-line {
     margin: 7px 0px 7px 0px;
     border-image: url(:/qss_icons/rc/up_arrow_disabled.png);
     height: 10px;
     width: 10px;
 }
 
-QScrollBar::add-line
-{
+QScrollBar::add-line {
     margin: 7px 0px 7px 0px;
     border-image: url(:/qss_icons/rc/down_arrow_disabled.png);
     height: 10px;
     width: 10px;
 }
 
-QScrollBar::up-arrow, QScrollBar::down-arrow
-{
+QScrollBar::up-arrow, QScrollBar::down-arrow {
     background: none;
 }
 
-QScrollBar::add-page, QScrollBar::sub-page
-{
+QScrollBar::add-page, QScrollBar::sub-page {
     background: none;
 }
