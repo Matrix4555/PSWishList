@@ -54,20 +54,24 @@ class GameItem(QtWidgets.QWidget):
             self.discount.setText(discount)
 
         if psPlusDiscount:
-            self.price.setObjectName('strikethrougprice')
             self.psPlusDiscount = QLabel(self)
             self.psPlusDiscount.setObjectName('pspluspricelabel')
-            self.psPlusDiscount.setGeometry(780, 40, 120, 25)
+            self.psPlusDiscount.setGeometry(780, 46, 120, 25)
             self.psPlusDiscount.setText(psPlusDiscount)
             if discount:
+                self.price.setObjectName('strikethrougprice')
                 self.psPlusDiscount.move(780, 74)
             self.psPlusLogo = QLabel(self)
-            self.psPlusLogo.setGeometry(self.psPlusDiscount.x() - 20, self.psPlusDiscount.y() - 3, 40, 43)
+            self.psPlusLogo.resize(40, 43)
             self.psPlusLogo.setPixmap(QPixmap('images/pspluslogo.png'))
             self.psPlusLogo.setScaledContents(True)
-            digit = int(psPlusDiscount.replace('RUB ', '').replace('.', ''))
-            if digit < 1000:
-                self.psPlusLogo.move(self.psPlusDiscount.x() - 10, self.psPlusDiscount.y() - 3)
+            def psPlusMove(shift):
+                self.psPlusLogo.move(self.psPlusDiscount.x() + shift, self.psPlusDiscount.y() - 3)
+            if not psPlusDiscount == 'Free':
+                digit = int(psPlusDiscount.replace('RUB ', '').replace('.', ''))
+                psPlusMove(-10) if digit < 1000 else psPlusMove(-25)
+            else:
+                psPlusMove(32)
 
         if offerTime:
             self.offerTime = QLabel(self)
@@ -92,6 +96,10 @@ class GameItem(QtWidgets.QWidget):
 
     def setButton(self, btn):
         self.deleteButton = btn
+
+    def setBlockColor(self, blocker):
+        if self.psPlusDiscount:
+            self.psPlusDiscount.setStyleSheet('color: white;' if blocker else '')
 
     def getData(self):
         data = []

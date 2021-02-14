@@ -185,7 +185,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 t.join()
 
             self.waiting.aBitMore()
-            sleep(1.5)                  # for widget function above
+            sleep(1.5)                  # wait widget function above (change widget)
             return True
 
         def complete(correctness):
@@ -199,9 +199,6 @@ class MainWindow(QtWidgets.QMainWindow):
                             Info(QtWidgets.QMessageBox.Critical, 'Error').run(currentGame.getTitle() + ' possibly changed its URL.' + \
                                 ' Please try to check URL of the game and change its URL in your wish list if it\'s need (delete the game then add with new URL).')
                             break
-                print(dataList[keyUrl])
-                print(additionTimes[i])
-                print('---------')
                 self.addToFile(keyUrl, additionTimes[i], dataList[keyUrl])
                 i += 1
             self.block(False)
@@ -211,18 +208,18 @@ class MainWindow(QtWidgets.QMainWindow):
         self.thread.start()
 
     def block(self, blocker, refresh = True):
+        for i in range(self.ui.list.count()):
+            self.ui.list.itemWidget(self.ui.list.item(i)).setBlockColor(blocker)    # remove/set yellow color of ps plus price
+        self.setEnabled(not blocker)
+        self.ui.list.setSelectionMode(QtWidgets.QAbstractItemView.NoSelection if blocker else QtWidgets.QAbstractItemView.SingleSelection)
         if blocker:
-            self.setEnabled(False)
-            self.ui.list.setSelectionMode(QtWidgets.QAbstractItemView.NoSelection)
             self.waiting = WaitingWidget(self)
         else:
-            if refresh:
+            if refresh:                 # if self.add() returns error about incorrect url then the refresh-actions are skipped
                 self.refreshList()
                 self.waiting.hide()
             del self.waiting
             del self.thread
-            self.ui.list.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
-            self.setEnabled(True)
 
     def goToUrl(self):
         url = self.ui.list.itemWidget(self.ui.list.currentItem()).getUrl()
@@ -281,11 +278,10 @@ class MainWindow(QtWidgets.QMainWindow):
     def getDataFromHtml(self, url):
 
         html = urllib.request.urlopen(url).read().decode('utf-8')
-
         try:
             title = html.split('title#name">')[1].split('<')[0]
         except:
-            return None
+            return None         # incorrect url
         if '&amp;' in title:
             for cut in (' PS4 &amp; PS5', ' PS4™ &amp; PS5™', ' PS4™ &amp;  PS5™', ' PS4 1 &amp; PS5'):
                 title = title.replace(cut, '')
@@ -302,39 +298,39 @@ class MainWindow(QtWidgets.QMainWindow):
             zero = True
 
         if not zero:
-            offerTime = html.split('"offerAvailability":')[2].split(',')[0]
-            if not 'null' in offerTime:
-                offerTime = self.changeDateFormat(offerTime.replace('"', '').replace('T', ' ') + 'ZZ')
-            else:
-                offerTime = html.split('"offerAvailability":')[1].split(',')[0]
-                if not 'null' in offerTime:
-                    offerTime = self.changeDateFormat(offerTime.replace('"', '').replace('T', ' ') + 'ZZ')
-                else:
-                    offerTime = None
+            def getDate(way):
+                stringWithDate = html.split('"offerAvailability":')[way].split(',')[0]
+                if not 'null' in stringWithDate:
+                    return self.changeDateFormat(stringWithDate.replace('"', '').replace('T', ' ') + 'ZZ')
+                return None
+
+            offerTime = getDate(2)
+            if offerTime == None:
+                offerTime = getDate(1)      # second check
+
             stringWithPSPlus = 'PS Plus","basePriceValue":' + originalPrice.replace('RUB ', '').replace('.', '') + '00' + ',"discountedValue":'
         psPlusPrice = None
 
         if zero:
             originalPrice = 'Free'
             discountPrice = None
+            offerTime = None
         elif stringWithPSPlus in html:
-            twoDiscounts = False
-            if not originalPrice == discountPrice:
-                twoDiscounts = True
+            if originalPrice == discountPrice:
+                discountPrice = None
             psPlusPrice = html.split(stringWithPSPlus)[1].split(',"')[0].replace('00', '')
+            del stringWithPSPlus
             if not psPlusPrice == '0':
                 if len(psPlusPrice) >= 4:
                     psPlusPrice = psPlusPrice[:1] + '.' + psPlusPrice[1:]
                 psPlusPrice = 'RUB ' + psPlusPrice
             else:
                 psPlusPrice = 'Free'
-            if not twoDiscounts:
-                discountPrice = None
         elif originalPrice == discountPrice:
             if originalPrice == 'Бесплатно':
                 originalPrice = 'Free'
             discountPrice = None
-
+        
         return (title, originalPrice, discountPrice, psPlusPrice, offerTime)
 
     def deleteGame(self):
