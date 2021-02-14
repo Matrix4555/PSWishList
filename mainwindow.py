@@ -362,7 +362,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.list.itemWidget(self.ui.list.item(i)).getButton().setIndex(i)
 
     def about(self):
-        Info().run('PSWishList (PlayStation WishList)\nVersion: 2.0')
+        Info().run('PSWishList (PlayStation WishList)\nVersion: 2.01')
 
     def setSound(self):     # jax's idea :)
 
